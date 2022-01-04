@@ -1,0 +1,13 @@
+version: '3'
+services:
+  prism:
+    container_name: prism
+    command: mock -p 4010 -h 0.0.0.0 /tmp/number-system.yaml
+    image: myop/mockdock
+    build: .
+    ports:
+    - "9092:4010"
+    environment:
+    - DOCS_BASE_URL=${DOCS_BASE_URL}
+    - DOCS_ID=${DOCS_ID}
+    - DOCS_AUTH_TOKEN=${DOCS_AUTH_TOKEN:-"abc"}

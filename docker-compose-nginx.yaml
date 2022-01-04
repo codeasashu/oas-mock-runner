@@ -1,0 +1,18 @@
+services:
+  prism:
+    command: mock -p 4010 -h 0.0.0.0 /tmp/number-system.yaml
+    image: stoplight/prism:4
+    volumes:
+    - ./prism/:/tmp/:ro
+  proxy:
+    depends_on:
+    - prism
+    environment:
+    - PRISM_HOST=prism
+    - PRISM_PORT=4010
+    image: nginx:alpine
+    ports:
+    - 9092:80
+    volumes:
+    - ./nginx:/etc/nginx/templates
+version: '3'
